@@ -1,4 +1,4 @@
-package com.worldwide.practice;
+package com.worldwide.practice.rx;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -7,6 +7,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
+import com.worldwide.practice.R;
 import com.worldwide.practice.rx.Util;
 
 import butterknife.BindView;

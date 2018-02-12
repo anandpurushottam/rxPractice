@@ -16,7 +16,7 @@
         <activity android:name=".rx.FormValidationActivity">
 
         </activity>
-        <activity android:name=".DataBindingActivity">
+        <activity android:name=".rx.DataBindingActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
