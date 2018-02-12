@@ -6,10 +6,7 @@ import com.squareup.leakcanary.LeakCanary;
 
 import timber.log.Timber;
 
-/**
- * Created by Anand on 2/9/2018.
- */
-
+/** Created by Anand on 2/9/2018. */
 public class App extends Application {
     @Override
     public void onCreate() {

@@ -1,16 +1,14 @@
-package com.worldwide.practice.rx;
+package com.worldwide.practice.feature;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.jakewharton.rxbinding2.widget.RxTextView;
-import com.jakewharton.rxbinding2.widget.TextViewTextChangeEvent;
-import com.squareup.haha.perflib.Snapshot;
 import com.worldwide.practice.R;
+import com.worldwide.practice.adapter.LogAdapter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,24 +19,19 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 import io.reactivex.android.schedulers.AndroidSchedulers;
-import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DefaultObserver;
 import io.reactivex.observers.DisposableObserver;
 import timber.log.Timber;
 
-import static com.worldwide.practice.rx.Util.isNotNullOrEmpty;
+import static com.worldwide.practice.Util.isNotNullOrEmpty;
 
-
-/**
- * Created by Anand on 2/9/2018.
- */
-
+/** Created by Anand on 2/9/2018. */
 public class AutoCompleteActivity extends AppCompatActivity {
     @BindView(R.id.searchField)
     EditText searchField;
 
     @BindView(R.id.listView)
     ListView listView;
+
     Unbinder unbinder;
     LogAdapter adapter;
     List<String> items;
@@ -52,14 +45,13 @@ public class AutoCompleteActivity extends AppCompatActivity {
 
         setAdapter();
 
-        disposable = RxTextView.textChangeEvents(searchField)
-                .debounce(450, TimeUnit.MILLISECONDS)
-                .filter(v -> isNotNullOrEmpty(v.text()))
-                .observeOn(AndroidSchedulers.mainThread())
-                .map(o -> o.text().toString())
-                .subscribeWith(getObserver());
-
-
+        disposable =
+                RxTextView.textChangeEvents(searchField)
+                        .debounce(450, TimeUnit.MILLISECONDS)
+                        .filter(v -> isNotNullOrEmpty(v.text()))
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .map(o -> o.text().toString())
+                        .subscribeWith(getObserver());
     }
 
     private DisposableObserver<String> getObserver() {
@@ -71,7 +63,7 @@ public class AutoCompleteActivity extends AppCompatActivity {
 
             @Override
             public void onError(Throwable e) {
-                Timber.e("Something exploded: " + e);
+                Timber.e(e);
             }
 
             @Override
@@ -85,13 +77,11 @@ public class AutoCompleteActivity extends AppCompatActivity {
         items = new ArrayList<>();
         adapter = new LogAdapter(this, items);
         listView.setAdapter(adapter);
-
     }
 
     private void logValue(CharSequence text) {
         items.add(0, text.toString());
         adapter.notifyDataSetChanged();
-
     }
 
     @OnClick(R.id.btnClear)
@@ -100,7 +90,6 @@ public class AutoCompleteActivity extends AppCompatActivity {
         adapter.notifyDataSetChanged();
         searchField.setText("");
     }
-
 
     @Override
     protected void onDestroy() {
