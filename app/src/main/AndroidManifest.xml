@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.worldwide.practice">
 
-  <uses-permission android:name="android.permission.INTERNET"/>
   <application
       android:name=".App"
       android:allowBackup="true"
@@ -11,21 +10,24 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
+    <activity android:name=".rx.AutoCompleteActivity">
 
-    <activity android:name=".feature.AutoCompleteActivity"/>
+    </activity>
+    <activity android:name=".rx.FormValidationActivity">
 
-    <activity android:name=".feature.FormValidationActivity"/>
-
-
-    <activity android:name=".feature.LauncherActivity">
+    </activity>
+    <activity android:name=".rx.DataBindingActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
+
         <category android:name="android.intent.category.LAUNCHER"/>
       </intent-filter>
+
     </activity>
-    <activity android:name=".feature.NetworkRequestActivity"/>
-    <activity android:name=".feature.ConcurrencyWithSchedulersDemoActivity"/>
-    <activity android:name=".feature.BufferActivity"/>
-    <activity android:name=".feature.PollingDataActivity"/>
+    <activity android:name=".rx.BufferClickActivity">
+
+
+    </activity>
   </application>
+
 </manifest>
