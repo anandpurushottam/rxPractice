@@ -10,13 +10,17 @@
       android:roundIcon="@mipmap/ic_launcher_round"
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
-    <activity android:name=".rx.AutoCompleteActivity">
 
-    </activity>
-    <activity android:name=".rx.FormValidationActivity">
+    <activity android:name=".feature.AutoCompleteActivity"/>
 
-    </activity>
-    <activity android:name=".rx.DataBindingActivity">
+    <activity android:name=".feature.BufferClickActivity"/>
+    <activity android:name=".feature.ConcurrencyWithSchedulersDemoActivity"/>
+    <activity android:name=".feature.DataBindingActivity"/>
+    <activity android:name=".feature.FormValidationActivity"/>
+    <activity android:name=".feature.NetworkRequestActivity"/>
+    <activity android:name=".feature.PollingDataActivity"/>
+
+    <activity android:name=".feature.LauncherActivity">
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
@@ -24,10 +28,8 @@
       </intent-filter>
 
     </activity>
-    <activity android:name=".rx.BufferClickActivity">
 
 
-    </activity>
   </application>
 
 </manifest>
