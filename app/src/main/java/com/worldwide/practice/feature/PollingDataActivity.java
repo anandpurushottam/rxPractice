@@ -1,27 +1,21 @@
 package com.worldwide.practice.feature;
 
 import android.os.Bundle;
-import android.support.annotation.ColorLong;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.ListView;
-import android.widget.TextView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 import butterknife.Unbinder;
 import com.worldwide.practice.R;
 import com.worldwide.practice.adapter.LogAdapter;
 import io.reactivex.Observable;
-import io.reactivex.Observer;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.internal.operators.observable.ObservableJust;
 import io.reactivex.observers.DisposableObserver;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
-import timber.log.Timber;
 
 /** Created by Anand on 13-02-2018. */
 public class PollingDataActivity extends AppCompatActivity {
@@ -37,7 +31,7 @@ public class PollingDataActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.polloing_data);
+        setContentView(R.layout.polling_data);
 
         unbinder = ButterKnife.bind(this);
 
