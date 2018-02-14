@@ -9,12 +9,10 @@ import android.widget.LinearLayout;
 import java.util.HashMap;
 import java.util.Map;
 
-import static com.worldwide.practice.Util.inDp;
+import static com.worldwide.practice.Util.*;
 
 /** Created by Anand on 10-02-2018. */
 public class LauncherActivity extends AppCompatActivity {
-    private static final int MATCH_PARENT = -1;
-    private static final int WRAP_CONTENT = -2;
 
     private HashMap<String, Class> map;
 
@@ -35,6 +33,7 @@ public class LauncherActivity extends AppCompatActivity {
                 ConcurrencyWithSchedulersDemoActivity.class);
         map.put("BufferClickActivity", BufferClickActivity.class);
         map.put("PollingDataActivity", PollingDataActivity.class);
+        map.put("CheckInternetWorking", CheckInternetWorking.class);
     }
 
     private void setView() {
