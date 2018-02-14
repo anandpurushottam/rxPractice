@@ -22,7 +22,7 @@ import java.util.concurrent.TimeUnit;
 import timber.log.Timber;
 
 /** Created by Anand on 12-02-2018. */
-public class BufferActivity extends AppCompatActivity {
+public class BufferClickActivity extends AppCompatActivity {
     @BindView(R.id.btnClick)
     Button btnClick;
 

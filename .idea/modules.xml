@@ -2,8 +2,10 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/ReactivePractice.iml" filepath="$PROJECT_DIR$/ReactivePractice.iml" />
+      <module fileurl="file://F:\Desktop\Rx\ReactivePractice.iml" filepath="F:\Desktop\Rx\ReactivePractice.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Rx.iml" filepath="$PROJECT_DIR$/Rx.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://F:\Desktop\Rx\app\app.iml" filepath="F:\Desktop\Rx\app\app.iml" />
     </modules>
   </component>
 </project>

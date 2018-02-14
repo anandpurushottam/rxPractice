@@ -30,30 +30,22 @@ dependencies {
   //Rx
   implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
   implementation 'io.reactivex.rxjava2:rxjava:2.1.9'
-
   //Butterknife
   compile 'com.jakewharton:butterknife:8.8.1'
   annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
-
   //Logging
   implementation 'com.jakewharton.timber:timber:4.6.0'
-
   //Binding
   compile 'com.jakewharton.rxbinding2:rxbinding:2.1.0'
-
   //Networking
   compile 'com.squareup.retrofit2:retrofit:2.3.0'
   compile 'com.squareup.retrofit2:adapter-rxjava2:2.3.0'
   compile 'com.squareup.okhttp3:okhttp:3.9.1'
-
   //Serializer
-
   compile 'com.squareup.retrofit2:converter-gson:2.3.0'
-
   //Memory leak checker
   debugCompile 'com.squareup.leakcanary:leakcanary-android:1.5.4'
   releaseCompile 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
-
   testImplementation 'junit:junit:4.12'
   androidTestImplementation 'com.android.support.test:runner:1.0.1'
   androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'

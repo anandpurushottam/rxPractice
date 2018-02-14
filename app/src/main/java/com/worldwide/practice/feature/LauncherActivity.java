@@ -33,7 +33,7 @@ public class LauncherActivity extends AppCompatActivity {
         map.put(
                 "ConcurrencyWithSchedulersDemoActivity",
                 ConcurrencyWithSchedulersDemoActivity.class);
-        map.put("BufferActivity", BufferActivity.class);
+        map.put("BufferClickActivity", BufferClickActivity.class);
         map.put("PollingDataActivity", PollingDataActivity.class);
     }
 
