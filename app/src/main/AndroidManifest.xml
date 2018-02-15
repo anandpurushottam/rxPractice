@@ -30,6 +30,7 @@
 
     </activity>
     <activity android:name=".feature.CheckConectivityActivity"/>
+    <activity android:name=".feature.ExponentialBackoffActivity"/>
 
 
   </application>

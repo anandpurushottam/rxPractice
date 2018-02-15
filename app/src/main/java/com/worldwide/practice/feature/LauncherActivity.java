@@ -34,6 +34,7 @@ public class LauncherActivity extends AppCompatActivity {
         map.put("BufferClickActivity", BufferClickActivity.class);
         map.put("PollingDataActivity", PollingDataActivity.class);
         map.put("CheckConectivityActivity", CheckConectivityActivity.class);
+        map.put("ExponentialBackoffActivity", ExponentialBackoffActivity.class);
     }
 
     private void setView() {
