@@ -29,7 +29,7 @@
       </intent-filter>
 
     </activity>
-    <activity android:name=".feature.CheckInternetWorking"/>
+    <activity android:name=".feature.CheckConectivityActivity"/>
 
 
   </application>

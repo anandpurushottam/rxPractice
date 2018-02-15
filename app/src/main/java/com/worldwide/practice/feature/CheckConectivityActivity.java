@@ -1,28 +1,29 @@
 package com.worldwide.practice.feature;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.Gravity;
 import android.view.ViewGroup;
-import android.widget.LinearLayout;
 import android.widget.TextView;
-import io.reactivex.Observable;
-import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.observers.DisposableObserver;
-import java.util.concurrent.TimeUnit;
+import io.reactivex.processors.PublishProcessor;
+import io.reactivex.subscribers.DisposableSubscriber;
 import timber.log.Timber;
 import static com.worldwide.practice.Util.*;
 /** Created by Anand on 2/14/2018. */
-public class CheckInternetWorking extends AppCompatActivity {
+public class CheckConectivityActivity extends AppCompatActivity {
     private TextView tvResult;
     Disposable disposable;
+    BroadcastReceiver broadcastReceiver;
+    PublishProcessor<Boolean> processor;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -36,32 +37,50 @@ public class CheckInternetWorking extends AppCompatActivity {
         tvResult.setTextSize(TypedValue.COMPLEX_UNIT_DIP, 20);
 
         setContentView(tvResult);
+
+        init();
     }
 
-    private void checkInternetConnection() {
+    private void init() {
+        processor = PublishProcessor.create();
+
+        broadcastReceiver =
+                new BroadcastReceiver() {
+                    @Override
+                    public void onReceive(Context context, Intent intent) {
+                        processor.onNext(isNetworkAvailable());
+                    }
+                };
+    }
+
+    private void register() {
         disposable =
-                Observable.interval(1000, TimeUnit.MILLISECONDS)
-                        .map(o -> isNetworkAvailable())
+                processor
+                        .startWith(isNetworkAvailable())
                         .distinctUntilChanged()
-                        .observeOn(AndroidSchedulers.mainThread())
-                        .subscribeWith(getDisposableObservable());
+                        .subscribeWith(getDisposableSubscriber());
+        registerReceiver(
+                broadcastReceiver, new IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION));
     }
 
-    private DisposableObserver<Boolean> getDisposableObservable() {
-        return new DisposableObserver<Boolean>() {
+    private void unregister() {
+        unregisterReceiver(broadcastReceiver);
+    }
+
+    private DisposableSubscriber<Boolean> getDisposableSubscriber() {
+        return new DisposableSubscriber<Boolean>() {
             @Override
             public void onNext(Boolean aBoolean) {
                 updateUI(aBoolean);
             }
 
             @Override
-            public void onError(Throwable e) {
-                Timber.e(e);
+            public void onError(Throwable t) {
+                Timber.e(t);
             }
 
             @Override
             public void onComplete() {
-
                 Timber.d("Completed");
             }
         };
@@ -86,13 +105,13 @@ public class CheckInternetWorking extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        disposable.dispose();
+        unregister();
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        checkInternetConnection();
+        register();
     }
 
     @Override

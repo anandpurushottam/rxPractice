@@ -33,7 +33,7 @@ public class LauncherActivity extends AppCompatActivity {
                 ConcurrencyWithSchedulersDemoActivity.class);
         map.put("BufferClickActivity", BufferClickActivity.class);
         map.put("PollingDataActivity", PollingDataActivity.class);
-        map.put("CheckInternetWorking", CheckInternetWorking.class);
+        map.put("CheckConectivityActivity", CheckConectivityActivity.class);
     }
 
     private void setView() {
