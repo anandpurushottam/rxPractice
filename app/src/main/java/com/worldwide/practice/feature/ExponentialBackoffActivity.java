@@ -3,21 +3,17 @@ package com.worldwide.practice.feature;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
-import android.util.TypedValue;
-import android.view.Gravity;
 import android.view.ViewGroup;
 import android.widget.ListView;
-import android.widget.TextView;
 import com.worldwide.practice.adapter.LogAdapter;
-import io.reactivex.Observable;
-import io.reactivex.processors.PublishProcessor;
+import io.reactivex.Flowable;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.subscribers.DisposableSubscriber;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.TimeUnit;
+import timber.log.Timber;
 
 import static com.worldwide.practice.Util.MATCH_PARENT;
-import static com.worldwide.practice.Util.WRAP_CONTENT;
 
 /** Created by Anand on 2/15/2018. */
 public class ExponentialBackoffActivity extends AppCompatActivity {
@@ -25,6 +21,9 @@ public class ExponentialBackoffActivity extends AppCompatActivity {
     private ListView listview;
     private List<String> logs;
     private LogAdapter adapter;
+    public final int MAX_RETRY = 10;
+    public final long MINIMUM_DELAY = 1000;
+    Disposable disposable;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -35,33 +34,34 @@ public class ExponentialBackoffActivity extends AppCompatActivity {
 
         listview = new ListView(this);
         listview.setLayoutParams(layoutParams);
-        setUpAdapter();
+
         setContentView(listview);
+        setUpAdapter();
+        RetryWithDelay retryWithDelay = new RetryWithDelay(MAX_RETRY, MINIMUM_DELAY);
+        disposable =
+                Flowable.error(new RuntimeException("Some error occurred"))
+                        .retryWhen(retryWithDelay)
+                        .subscribeWith(
+                                new DisposableSubscriber<Object>() {
+                                    @Override
+                                    public void onNext(Object o) {
 
-        PublishProcessor<String> publishProcessor = PublishProcessor.create();
-        publishProcessor.onNext("1");
-        publishProcessor.onNext("2");
-        publishProcessor.onError(new Exception("Somemthing exploded"));
+                                        Timber.d("Onnext");
+                                        updateUi("OnNext");
+                                    }
 
-        publishProcessor
-                .retry(12)
-                .subscribeWith(
-                        new DisposableSubscriber<String>() {
-                            @Override
-                            public void onNext(String log) {
-                                updateUi(log);
-                            }
+                                    @Override
+                                    public void onError(Throwable t) {
+                                        updateUi(t.getLocalizedMessage());
+                                        Timber.d(t.getLocalizedMessage());
+                                    }
 
-                            @Override
-                            public void onError(Throwable t) {
-                                updateUi(t.getLocalizedMessage());
-                            }
-
-                            @Override
-                            public void onComplete() {
-                                updateUi("onComplete");
-                            }
-                        });
+                                    @Override
+                                    public void onComplete() {
+                                        updateUi("OnNext");
+                                        Timber.d("onComplete");
+                                    }
+                                });
     }
 
     private void setUpAdapter() {
@@ -71,7 +71,14 @@ public class ExponentialBackoffActivity extends AppCompatActivity {
     }
 
     private void updateUi(String log) {
+        Timber.d(log);
         logs.add(0, log);
         adapter.notifyDataSetChanged();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        disposable.dispose();
     }
 }
